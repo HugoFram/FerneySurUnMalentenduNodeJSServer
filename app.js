@@ -10,10 +10,12 @@ var playerRouter = require('./routes/player');
 var availabilityRouter = require('./routes/availability');
 var calendarRouter = require('./routes/calendar');
 var locationRouter = require('./routes/location');
-var matchRouter = require('./routes/match');
+var matchPresenceRouter = require('./routes/match-presence');
 var rankingRouter = require('./routes/ranking');
 var resultsRouter = require('./routes/results');
-var trainingRouter = require('./routes/training');
+var trainingPresenceRouter = require('./routes/training-presence');
+
+var matchRouter = require('./routes/match');
 
 var app = express();
 
@@ -33,10 +35,11 @@ app.use('/players', playerRouter);
 app.use('/availabilities', availabilityRouter);
 app.use('/calendar', calendarRouter);
 app.use('/locations', locationRouter);
-app.use('/matches', matchRouter);
+app.use('/match-presences', matchPresenceRouter);
 app.use('/ranking', rankingRouter);
 app.use('/results', resultsRouter);
-app.use('/trainings', trainingRouter);
+app.use('/training-presences', trainingPresenceRouter);
+app.use('/matches', matchRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
