@@ -19,6 +19,32 @@ availabilityRouter.route('/')
             .catch(err => console.error(err.stack))
     });
 
+availabilityRouter.route('/:matchNum')
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
+    .post(cors.corsWithOptions, (req, res, next) => {
+        console.log(req.body);
+        var query = "DELETE FROM availability WHERE \"matchNum\" = '" + req.params.matchNum + "';";
+        query += "INSERT INTO availability(name, availability, role, \"trainingPresence\", \"matchPresence\", \"selected\", \"matchNum\") VALUES ";
+        req.body.forEach((availability, i) => {
+            query += "('" + availability.name + "', '" + 
+                            availability.availability + "', '" + 
+                            availability.role + "', '" + 
+                            availability.trainingPresence + "', '" + 
+                            availability.matchPresence + "', '" + 
+                            availability.selected + "', '" + 
+                            availability.matchNum + "')" + ((i == req.body.length - 1) ? ";" : ",");
+        });
+        console.log(query);
+        client.query(query)
+            .then(result => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', "application/json");
+                console.log(result);
+                res.json(result);
+            })
+            .catch(err => console.error(err.stack))
+    });
+
 availabilityRouter.route('/:matchNum/:playerName')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
     .post(cors.corsWithOptions, (req, res, next) => {
