@@ -6,7 +6,7 @@ const client = new Client({
     host: config.host,
     database: config.dbname,
     password: config.password,
-    port: config.port,
+    port: config.dbport,
   });
   client.connect()
     .then((db) => console.log("Connected correctly to the database"))
