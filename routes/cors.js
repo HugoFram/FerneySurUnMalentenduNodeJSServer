@@ -10,6 +10,7 @@ var corsOptionDelegate = (req, callback) => {
     var corsOption;
 
     console.log("Request originating from " + req.header('Origin'));
+    console.log(whitelist);
     if (whitelist.indexOf(req.header('Origin')) !== -1) {
         corsOptions = { origin: true };
     } else {
