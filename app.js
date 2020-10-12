@@ -15,6 +15,7 @@ var matchPresenceRouter = require('./routes/match-presence');
 var rankingRouter = require('./routes/ranking');
 var resultsRouter = require('./routes/results');
 var trainingPresenceRouter = require('./routes/training-presence');
+var sendmailRouter = require('./routes/sendmail');
 
 var matchRouter = require('./routes/match');
 
@@ -42,6 +43,7 @@ app.use('/ranking', rankingRouter);
 app.use('/results', resultsRouter);
 app.use('/training-presences', trainingPresenceRouter);
 app.use('/matches', matchRouter);
+app.use('/sendmail', sendmailRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
