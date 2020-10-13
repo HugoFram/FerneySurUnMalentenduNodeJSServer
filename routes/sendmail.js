@@ -24,7 +24,7 @@ sendmailRouter.route('/')
         console.log(req.body);
         let mailOptions = {
             from: config.mailsender,
-            to: req.body.recipient,
+            to: config.istestenv ? config.testemailaddress : req.body.recipient,
             subject: req.body.subject,
             //text: req.params.contentText,
             html: req.body.content
