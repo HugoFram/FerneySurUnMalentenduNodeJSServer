@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,9 +21,11 @@ var sendmailRouter = require('./routes/sendmail');
 var matchRouter = require('./routes/match');
 
 var app = express();
+app.use(cors());
 
 app.all('*', (req, res, next) => {
   if (req.secure) {
+    console.log('Secure connection from ' + req.protocol + '://' + req.get('host') + req.originalUrl);
     return next();
   }
   else {

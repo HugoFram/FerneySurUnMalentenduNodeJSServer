@@ -7,7 +7,7 @@ const app = express();
 const whitelist = ['http://localhost:3000', 'https://localhost:3443', 'http://localhost:4200', 'http://217.162.196.67:' + config.clientport, 'http://192.168.0.157:' + config.clientport];
 
 var corsOptionDelegate = (req, callback) => {
-    var corsOption;
+    var corsOptions;
 
     console.log("Request originating from " + req.header('Origin'));
     console.log(whitelist);
