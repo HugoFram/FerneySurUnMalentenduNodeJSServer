@@ -17,8 +17,8 @@ var rankingRouter = require('./routes/ranking');
 var resultsRouter = require('./routes/results');
 var trainingPresenceRouter = require('./routes/training-presence');
 var sendmailRouter = require('./routes/sendmail');
-
 var matchRouter = require('./routes/match');
+var sheetRouter = require('./routes/sheet');
 
 var app = express();
 app.use(cors());
@@ -57,6 +57,7 @@ app.use('/results', resultsRouter);
 app.use('/training-presences', trainingPresenceRouter);
 app.use('/matches', matchRouter);
 app.use('/sendmail', sendmailRouter);
+app.use('/sheets', sheetRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
