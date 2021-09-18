@@ -25,12 +25,12 @@ app.use(cors());
 
 app.all('*', (req, res, next) => {
   if (req.secure) {
-    console.log('Secure connection from ' + req.protocol + '://' + req.get('host') + req.originalUrl);
+    console.log('Redirecting ' + req.protocol + '://' + req.get('host') + req.originalUrl + ' to http://' + req.hostname + ':' + app.get('port') + req.url);
+    res.redirect(307, 'http://' + req.hostname + ':' + app.get('port') + req.url);
     return next();
   }
   else {
-    console.log('Redirecting ' + req.protocol + '://' + req.get('host') + req.originalUrl + ' to https://' + req.hostname + ':' + app.get('secPort') + req.url);
-    res.redirect(307, 'https://' + req.hostname + ':' + app.get('secPort') + req.url);
+    console.log('Connection from ' + req.protocol + '://' + req.get('host') + req.originalUrl);
   }
 });
 
