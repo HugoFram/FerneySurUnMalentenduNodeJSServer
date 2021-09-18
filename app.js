@@ -27,10 +27,10 @@ app.all('*', (req, res, next) => {
   if (req.secure) {
     console.log('Redirecting ' + req.protocol + '://' + req.get('host') + req.originalUrl + ' to http://' + req.hostname + ':' + app.get('port') + req.url);
     res.redirect(307, 'http://' + req.hostname + ':' + app.get('port') + req.url);
-    return next();
   }
   else {
     console.log('Connection from ' + req.protocol + '://' + req.get('host') + req.originalUrl);
+    return next();
   }
 });
 
