@@ -10,11 +10,41 @@ trainingPresenceRouter.use(bodyParser.json());
 trainingPresenceRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
     .get(cors.cors, (req, res, next) => {
-        client.query("SELECT * FROM training")
+        client.query("SELECT name, date, presence FROM training JOIN player ON training.name = player.firstname ORDER BY date, name")
             .then(result => {
+                let response = {
+                    trainings: [],
+                    players: []
+                }
+                result.rows.forEach(row => {
+                    let playerId = response.players.indexOf(row.name);
+                    let trainingId = response.trainings.findIndex((training) => training.date == row.date);
+                    if (playerId == -1) {
+                        response.players.push(row.name);
+                        playerId = response.players.length - 1;
+                    }
+                    if (trainingId == -1) {
+                        response.trainings.push({
+                            date: row.date,
+                            label: '',
+                            presences: {}
+                        });
+                        trainingId = response.trainings.length - 1
+                    }
+                    response.trainings[trainingId].presences[row.name] = {
+                        name: row.name,
+                        presenceType: row.presence
+                    };
+                })
+                // Compute row label
+                response.trainings.forEach(training => {
+                    let numPresent = Object.entries(training.presences).filter(presence => presence[1].presenceType === 'Présent').length;
+                    training.label = new Date(training.date).toLocaleDateString("fr-FR") + " (" + numPresent + ")";
+                })
+
                 res.statusCode = 200;
                 res.setHeader('Content-Type', "application/json");
-                res.json(result.rows);
+                res.json(response);
             })
             .catch(err => console.error(err.stack))
     })
