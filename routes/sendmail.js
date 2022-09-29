@@ -21,20 +21,19 @@ const transport  = nodemailer.createTransport({
 sendmailRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
     .post(cors.corsWithOptions, (req, res) => {
-        console.log(req.body);
         let mailOptions = {
             from: config.mailsender,
             to: config.istestenv ? config.testemailaddress : req.body.recipient,
             subject: req.body.subject,
             //text: req.params.contentText,
-            html: req.body.content
-            //attachments: [
-            //  {
-            //    filename: 'mailtrap.png',
-            //    path: __dirname + '/mailtrap.png',
-            //    cid: 'uniq-mailtrap.png' 
-            //  }
-            //]
+            html: req.body.content,
+            attachments: [
+              {
+                filename: 'cedric.png',
+                path: './public/images/cedric_question.png',
+                cid: 'cedric_question.png'
+              }
+            ]
         };
 
         transport.sendMail(mailOptions, (error, info) => {
