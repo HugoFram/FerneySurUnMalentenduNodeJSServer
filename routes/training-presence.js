@@ -39,7 +39,8 @@ trainingPresenceRouter.route('/')
                 // Compute row label
                 response.trainings.forEach(training => {
                     let numPresent = Object.entries(training.presences).filter(presence => presence[1].presenceType === 'Présent').length;
-                    training.label = new Date(training.date).toLocaleDateString("fr-FR") + " (" + numPresent + ")";
+                    let date = new Date(training.date)
+                    training.label = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear() + " (" + numPresent + ")";
                 })
 
                 res.statusCode = 200;
